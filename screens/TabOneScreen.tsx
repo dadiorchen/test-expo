@@ -2,12 +2,7 @@ import React from "react";
 import EditScreenInfo from "../components/EditScreenInfo";
 import { Text, View } from "../components/Themed";
 import { RootTabScreenProps } from "../types";
-import {
-  SafeAreaView,
-  StyleSheet,
-  TouchableOpacity,
-  TextInput,
-} from "react-native";
+import { StyleSheet, TouchableOpacity, TextInput, Button } from "react-native";
 import DB from "./DB";
 
 import { Camera } from "expo-camera";
@@ -57,24 +52,24 @@ const UselessTextInput = () => {
   const [number, onChangeNumber] = React.useState(null);
 
   return (
-    <SafeAreaView>
-      <TextInput
-        style={styles.input}
-        onChangeText={onChangeText}
-        value={text}
-      />
-    </SafeAreaView>
+    <TextInput style={styles.input} onChangeText={onChangeText} value={text} />
   );
 };
 
 export default function TabOneScreen({
   navigation,
 }: RootTabScreenProps<"TabOne">) {
+  const [isCamera, setIsCamera] = React.useState(false);
+  function handlePress() {
+    setIsCamera(true);
+  }
   return (
     <View style={styles.container}>
+      <Text>Midimini</Text>
       <UselessTextInput />
       <UselessTextInput />
-      {/* <TakePhoto /> */}
+      <Button onPress={handlePress} title="Take a photo" />
+      {isCamera ? <TakePhoto /> : null}
       <DB />
       {/* <View
         style={styles.separator}
