@@ -9,7 +9,11 @@ import {
   View,
 } from "react-native";
 import Constants from "expo-constants";
-import * as SQLite from "expo-sqlite";
+import initSqlJs from "sql.js";
+import sqlWasm from "!!file-loader?name=sql-wasm-[contenthash].wasm!sql.js/dist/sql-wasm.wasm";
+
+console.warn("xxx:", initSqlJs);
+console.warn("sqlwasm:", sqlWasm);
 
 function openDatabase() {
   if (Platform.OS === "web") {
