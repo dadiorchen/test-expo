@@ -11,6 +11,7 @@ import {
 import Constants from "expo-constants";
 import initSqlJs from "sql.js";
 import sqlWasm from "!!file-loader?name=sql-wasm-[contenthash].wasm!sql.js/dist/sql-wasm.wasm";
+import log from "loglevel";
 
 console.warn("xxx:", initSqlJs);
 console.warn("sqlwasm:", sqlWasm);
@@ -73,6 +74,24 @@ function Items({ done: doneHeading, onPressItem }) {
 }
 
 export default function App() {
+  async function loadDB() {
+    const SQL = await initSqlJs({
+      locateFile: () => sqlWasm,
+    });
+    const db = new SQL.Database();
+    log.warn("db:", db);
+    const result = db.exec("select date()");
+    log.warn("result:", result);
+  }
+
+  useEffect(() => {
+    loadDB();
+  }, []);
+
+  return <div style={{ background: "white" }}>web sql</div>;
+}
+
+function App2() {
   const [text, setText] = useState(null);
   const [forceUpdate, forceUpdateId] = useForceUpdate();
 
